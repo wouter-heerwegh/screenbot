@@ -8,8 +8,18 @@ If you have difficulties setting environment variables, follow [this article](ht
 ```
 pip install -r requirements.txt
 ```
+or just use the binary from a release
 
 ## Usage
 ```
-python screenbot.py 'slacktoken' 'channel'
+python screenbot.py 'slack_token' 'channel'
+```
+or:
+```
+screenbot.exe 'slack_token' 'channel'
+```
+
+if you have the slack_token set as an environment variable you dont have to give the slack token:
+```
+python screenbot.py 'channel'
 ```
