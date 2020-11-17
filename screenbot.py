@@ -23,8 +23,12 @@ if __name__ == "__main__":
     channel = ''
 
     if len(sys.argv) == 1 :
-        print("Not enough arguments\nUsage: python screenbot.py 'slacktoken' 'channel'")
-        sys.exit()
+        if os.environ.get('SLACK_BOT_TOKEN') == None or os.environ.get('SLACK_CHANNEL') == None:
+            print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN' and 'SLACK_CHANNEL'\nUsage: python screenbot.py 'slacktoken' 'channel'")
+            sys.exit()
+            
+        slack_token = os.environ.get('SLACK_BOT_TOKEN')
+        channel = os.environ.get('SLACK_CHANNEL')
     elif len(sys.argv) == 2:
         if os.environ.get('SLACK_BOT_TOKEN') == None:
             print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN'\nUsage: python screenbot.py 'slacktoken' 'channel'")
