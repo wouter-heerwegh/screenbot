@@ -16,7 +16,7 @@ def on_press(key):
             print("Error traceback: ", e)
 
     elif key == keyboard.Key.esc:
-        exit()
+        sys.exit()
 
 if __name__ == "__main__":
     slack_token = ''
@@ -24,11 +24,11 @@ if __name__ == "__main__":
 
     if len(sys.argv) == 1 :
         print("Not enough arguments\nUsage: python screenbot.py 'slacktoken' 'channel'")
-        exit()
+        sys.exit()
     elif len(sys.argv) == 2:
         if os.environ.get('SLACK_BOT_TOKEN') == None:
             print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN'\nUsage: python screenbot.py 'slacktoken' 'channel'")
-            exit()
+            sys.exit()
 
         print("Using slack token from environment variables")
         slack_token = os.environ.get('SLACK_BOT_TOKEN')
