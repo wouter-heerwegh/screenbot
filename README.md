@@ -14,16 +14,11 @@ or if you don't have python installed, just use the binary from a release
 
 ## Usage
 ```
-python screenbot.py 'slack_token' 'channel'
+python screenbot.py
 ```
 or
 ```
-screenbot.exe 'slack_token' 'channel'
-```
-
-if you have the slack_token and channel set as an environment variables you dont have to give them as arguments:
-```
-python screenbot.py
+screenbot.exe
 ```
 
 If you want to save the slack token and channel, run the script/executable in administrator mode. This is because it needs access to set the token and channel as environment variables.

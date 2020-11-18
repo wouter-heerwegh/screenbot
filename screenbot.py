@@ -41,30 +41,26 @@ if __name__ == "__main__":
     slack_token = ''
     channel = ''
 
-    if len(sys.argv) == 1 :
+    save = input("Would you like to store/edit your token and/or channel? (y/N): ")
+    while True:
+        if str(save).lower() == 'y':
+            token = input("Slack bot token (leave empty if you don't want to change it): ")
+            if token != "":
+                setenv_var("SLACK_BOT_TOKEN", token)
+            chan = input("Slack channel (leave empty if you don't want to change it): ")
+            if chan != "":
+                setenv_var("SLACK_CHANNEL", chan)
+
         if os.environ.get('SLACK_BOT_TOKEN') == None or os.environ.get('SLACK_CHANNEL') == None:
-            print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN' and 'SLACK_CHANNEL'\nUsage: python screenbot.py 'slacktoken' 'channel'")
-            sys.exit()
+            print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN' and 'SLACK_CHANNEL'\n")
+        else:
+            break
 
-        slack_token = os.environ.get('SLACK_BOT_TOKEN')
-        channel = os.environ.get('SLACK_CHANNEL')
-    elif len(sys.argv) == 2:
-        if os.environ.get('SLACK_BOT_TOKEN') == None:
-            print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN'\nUsage: python screenbot.py 'slacktoken' 'channel'")
-            sys.exit()
-
-        print("Using slack token from environment variables")
-        slack_token = os.environ.get('SLACK_BOT_TOKEN')
-        channel = sys.argv[1]
-    else:
-        x = input("Do you want to save these variables? (y/N): ")
-        if str(x).lower() == 'y':
-            setenv_var("SLACK_BOT_TOKEN", sys.argv[1])
-            setenv_var("SLACK_CHANNEL", sys.argv[2])
-        slack_token = sys.argv[1]
-        channel = sys.argv[2]
+    slack_token = os.environ.get('SLACK_BOT_TOKEN')
+    channel = os.environ.get('SLACK_CHANNEL')
 
     print("Bot is ready")
+    print("Press the 'print screen' button to send a screenshot, press 'escape' to quit")
 
     client = slack.WebClient(token=slack_token)
 
