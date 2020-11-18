@@ -1,5 +1,5 @@
 from pynput import keyboard
-import slack, os, pyautogui, sys
+import slack, os, pyautogui, sys, win32api, win32con
 
 def on_press(key):
     if key == keyboard.Key.print_screen:
@@ -18,6 +18,25 @@ def on_press(key):
     elif key == keyboard.Key.esc:
         sys.exit()
 
+def setenv_var(varname, value):
+    try:
+        rkey = win32api.RegOpenKeyEx(win32con.HKEY_LOCAL_MACHINE, 'SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment',0 ,win32con.KEY_WRITE)
+        try:
+            win32api.RegSetValueEx(rkey, varname, 0, win32con.REG_SZ, value)
+            print("Saved ", varname)
+            return True
+        except Exception:
+            pass
+    except Exception:
+        print("No access to save environment variables, if you want to save them, please run this once in administrator mode")
+        print("Running bot without save\n")
+    finally:
+        try:
+            win32api.RegCloseKey(rkey)
+        except UnboundLocalError:
+            pass
+    return False
+
 if __name__ == "__main__":
     slack_token = ''
     channel = ''
@@ -26,7 +45,7 @@ if __name__ == "__main__":
         if os.environ.get('SLACK_BOT_TOKEN') == None or os.environ.get('SLACK_CHANNEL') == None:
             print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN' and 'SLACK_CHANNEL'\nUsage: python screenbot.py 'slacktoken' 'channel'")
             sys.exit()
-            
+
         slack_token = os.environ.get('SLACK_BOT_TOKEN')
         channel = os.environ.get('SLACK_CHANNEL')
     elif len(sys.argv) == 2:
@@ -38,6 +57,10 @@ if __name__ == "__main__":
         slack_token = os.environ.get('SLACK_BOT_TOKEN')
         channel = sys.argv[1]
     else:
+        x = input("Do you want to save these variables? (y/N): ")
+        if str(x).lower() == 'y':
+            setenv_var("SLACK_BOT_TOKEN", sys.argv[1])
+            setenv_var("SLACK_CHANNEL", sys.argv[2])
         slack_token = sys.argv[1]
         channel = sys.argv[2]
 

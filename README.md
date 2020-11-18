@@ -10,7 +10,7 @@ If you have difficulties setting environment variables, follow [this article](ht
 pip install -r requirements.txt
 ```
 
-or just use the binary from a release
+or if you don't have python installed, just use the binary from a release
 
 ## Usage
 ```
@@ -26,4 +26,6 @@ if you have the slack_token and channel set as an environment variables you dont
 python screenbot.py
 ```
 
-This bot posts a picture when pressing the 'print screen' button and exits when escape is pressed.
+If you want to save the slack token and channel, run the script/executable in administrator mode. This is because it needs access to set the token and channel as environment variables.
+
+This bot posts a picture when pressing the 'print screen' button and exits when 'escape' is pressed.
