@@ -1,5 +1,5 @@
 from pynput import keyboard
-import slack, os, pyautogui, sys, win32api, win32con
+import slack_sdk, os, pyautogui, sys, win32api, win32con
 
 def on_press(key):
     if key == keyboard.Key.print_screen:
@@ -7,10 +7,10 @@ def on_press(key):
         myScreenshot = pyautogui.screenshot()
         myScreenshot.save('screen.png')
         try:
-            client.files_upload(channels=channel,
+            client.files_upload_v2(channel=channel,
                 file='screen.png',
                 title='Test upload')
-        except slack.errors.SlackApiError:
+        except slack_sdk.errors.SlackApiError:
             e = sys.exc_info()
             print("Failed to upload to slack, maybe the token or channel are not correct?")
             print("Error traceback: ", e)
@@ -51,7 +51,7 @@ if __name__ == "__main__":
             if chan != "":
                 setenv_var("SLACK_CHANNEL", chan)
 
-        if os.environ.get('SLACK_BOT_TOKEN') == None or os.environ.get('SLACK_CHANNEL') == None:
+        if os.environ.get('SLACK_BOT_TOKEN') is None or os.environ.get('SLACK_CHANNEL') is None:
             print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN' and 'SLACK_CHANNEL'\n")
         else:
             break
@@ -62,6 +62,6 @@ if __name__ == "__main__":
     print("Bot is ready")
     print("Press the 'print screen' button to send a screenshot, press 'escape' to quit")
 
-    client = slack.WebClient(token=slack_token)
+    client = slack_sdk.WebClient(os.environ["SLACK_BOT_TOKEN"])
 
     with keyboard.Listener(on_press=on_press) as listener: listener.join()
