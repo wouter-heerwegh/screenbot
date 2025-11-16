@@ -46,7 +46,7 @@ if __name__ == "__main__":
         token = input("Slack bot token (leave empty if you don't want to change it): ")
         if token != "":
             setenv_var("SLACK_BOT_TOKEN", token)
-        chan = input("Slack channel (leave empty if you don't want to change it): ")
+        chan = input("Slack channel ID (Open channel details, then the ID will be at the bottom) (leave empty if you don't want to change it): ")
         if chan != "":
             setenv_var("SLACK_CHANNEL", chan)
         print('Restart the program to reload your environment variables')
