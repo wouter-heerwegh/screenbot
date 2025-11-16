@@ -42,19 +42,19 @@ if __name__ == "__main__":
     channel = ''
 
     save = input("Would you like to store/edit your token and/or channel? (y/N): ")
-    while True:
-        if str(save).lower() == 'y':
-            token = input("Slack bot token (leave empty if you don't want to change it): ")
-            if token != "":
-                setenv_var("SLACK_BOT_TOKEN", token)
-            chan = input("Slack channel (leave empty if you don't want to change it): ")
-            if chan != "":
-                setenv_var("SLACK_CHANNEL", chan)
+    if str(save).lower() == 'y':
+        token = input("Slack bot token (leave empty if you don't want to change it): ")
+        if token != "":
+            setenv_var("SLACK_BOT_TOKEN", token)
+        chan = input("Slack channel (leave empty if you don't want to change it): ")
+        if chan != "":
+            setenv_var("SLACK_CHANNEL", chan)
+        print('Restart the program to reload your environment variables')
+        exit()
 
-        if os.environ.get('SLACK_BOT_TOKEN') is None or os.environ.get('SLACK_CHANNEL') is None:
-            print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN' and 'SLACK_CHANNEL'\n")
-        else:
-            break
+    if os.environ.get('SLACK_BOT_TOKEN') is None or os.environ.get('SLACK_CHANNEL') is None:
+        print("Slack token not found in environment variables, make sure the variable is called 'SLACK_BOT_TOKEN' and 'SLACK_CHANNEL'\n")
+        exit()
 
     slack_token = os.environ.get('SLACK_BOT_TOKEN')
     channel = os.environ.get('SLACK_CHANNEL')
